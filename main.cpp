@@ -26,7 +26,7 @@ int main()
         if(i == 100)
         {
             MyTask j;
-            j.SetData();
+            j.SetData(i);
             myThreadPool.AddTask(&j,i);
         }
         if(i == -1)

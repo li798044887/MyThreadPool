@@ -1,5 +1,6 @@
 #include <iostream>
-#include "MyThreadPool"
+#include <thread>
+#include "MyThreadPool.h"
 
 MyThreadPool::MyThreadPool(int number)
 {
@@ -8,8 +9,8 @@ MyThreadPool::MyThreadPool(int number)
     //创建number个空闲线程放入空闲容器中
     idleThreadContainer.Assign(number,this);
     //创建管理线程threadThis用于进行线程池中线程的调度
-    threadThis = thread(&MyThreadPool::Start, this);
-    threadThis.Detach();
+    threadThis = std::thread(&MyThreadPool::Start, this);
+    threadThis.detach();
 }
 
 void MyThreadPool::EndMyThreadPool()
@@ -63,12 +64,12 @@ void MyThreadPool::Start()
         //将任务堆顶的任务弹出
         Task *b = taskContainer.Top();
         taskContainer.Pop();
-        Task_mutex.unlock();
+        taskMutex.unlock();
         
         //将弹出的任务与空闲容器的中的一个线程绑定，并将该线程弹出
         idleMutex.lock();
-        MyThread *myThread = idleThreadContainer.top();
-        idleThreadContainer.pop();
+        MyThread *myThread = idleThreadContainer.Top();
+        idleThreadContainer.Pop();
         myThread->Assign(b);
         idleMutex.unlock();
         
@@ -86,19 +87,19 @@ void MyThreadPool::AddTask(Task *task, int priority = (PRIORITY::NORMAL))
 {
     task->SetPriority(priority);
     taskMutex.lock();
-    taskContainer.push(task);
+    taskContainer.Push(task);
     taskMutex.unlock();
 }
 
 void MyThreadPool::RemoveThreadFromBusy(MyThread *myThread)
 {
     busyMutex.lock();
-    std::cout << "Thread:" << myThread->GetThreadId()<< " remove from busylist" << endl;
+    std::cout << "Thread:" << myThread->GetThreadId()<< " remove from busylist" <<std::endl;
     //将一个线程从任务容器中移除并放回空闲容器中
     //使用busyMutex和idleMutex 进行加锁和解锁，确保数据的一致性
     busyThreadContainer.Erase(myThread);
     busyMutex.unlock();
     idleMutex.lock();
-    idleThreadContainer.push(myThread);
+    idleThreadContainer.Push(myThread);
     idleMutex.unlock();
 }

@@ -34,7 +34,7 @@ void IdleThreadContainer::Pop()
 
 void IdleThreadContainer::Erase(MyThread *m)
 {
-    idleThreadContainer.erase(find(idleThreadContainer.begin(),idleThreadContainer),m);
+    idleThreadContainer.erase(std::find(idleThreadContainer.begin(),idleThreadContainer.end(),m));
 }
 
 //向空闲容器添加number个线程

@@ -9,7 +9,7 @@ BusyThreadContainer::~BusyThreadContainer()
 {
 }
 
-void BusyThreadContainer::push(MyThread *m)
+void BusyThreadContainer::Push(MyThread *m)
 {
     //将线程放入工作容器
     busyThreadContainer.push_back(m);
