@@ -1,6 +1,7 @@
 #include "IdleThreadContainer.h"
 #include "MyThread.h"
 #include <iostream>
+#include <algorithm>
 
 IdleThreadContainer::IdleThreadContainer()
 {

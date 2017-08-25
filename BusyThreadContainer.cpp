@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "BusyThreadContainer.h"
 #include "MyThread.h"
 
@@ -18,7 +19,7 @@ void BusyThreadContainer::Push(MyThread *m)
 void BusyThreadContainer::Erase(MyThread *m)
 {
     //在容器中查找目标线程并释放
-    busyThreadContainer.erase(find(busyThreadContainer.begin(),busyThreadContainer.end(),m));
+    busyThreadContainer.erase(std::find(busyThreadContainer.begin(),busyThreadContainer.end(),m));
     
 }
 
