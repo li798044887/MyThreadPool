@@ -27,6 +27,4 @@ public:
 
 private:
     std::vector<MyThread*> idleThreadContainer;
-    typedef std::vector<MyThread*> Container;
-    typedef Container::iterator Iterator;
 };

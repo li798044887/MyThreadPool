@@ -30,11 +30,11 @@ public:
 private:
     BusyThreadContainer busyThreadContainer;
     IdleThreadContainer idleThreadContainer;
-    bool isSurvive;
     TaskContainer taskContainer;
     std::thread threadThis;
     std::mutex busyMutex;
     std::mutex idleMutex;
     std::mutex taskMutex;
+    bool isSurvive;
     int numberOfThread;
 };

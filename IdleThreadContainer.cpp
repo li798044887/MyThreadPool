@@ -11,7 +11,7 @@ IdleThreadContainer::IdleThreadContainer()
 IdleThreadContainer::~IdleThreadContainer()
 {
     int i = 0;
-    for(Iterator it = idleThreadContainer.begin();it!=idleThreadContainer.end();it++)
+    for(auto it = idleThreadContainer.begin();it!=idleThreadContainer.end();it++)
     {
         std::cout<<i++<<std::endl;
         delete *it;

@@ -8,7 +8,7 @@ MyThreadPool::MyThreadPool(int number)
     numberOfThread = number;
     //创建number个空闲线程放入空闲容器中
     idleThreadContainer.Assign(number,this);
-    //创建管理线程threadThis用于进行线程池中线程的调度
+    //启动管理线程threadThis用于进行线程池中线程的调度
     threadThis = std::thread(&MyThreadPool::Start, this);
     threadThis.detach();
 }
@@ -36,10 +36,11 @@ void MyThreadPool::Start()
             busyMutex.lock();
             //判断工作容器中是否有线程
             if(busyThreadContainer.Size()!= 0 )
-            {
+            {   //如果有工作线程则继续while循环
                 busyMutex.unlock();
                 continue;
             }
+            //如果没有工作线程则跳出while循环
             busyMutex.unlock();
             break;
         }
@@ -61,12 +62,12 @@ void MyThreadPool::Start()
             continue;
         }
         
-        //将任务堆顶的任务弹出
+        //将任务优先队列最优先的任务出队
         Task *b = taskContainer.Top();
         taskContainer.Pop();
         taskMutex.unlock();
         
-        //将弹出的任务与空闲容器的中的一个线程绑定，并将该线程弹出
+        //将出队的任务与空闲容器的中的一个线程绑定，并将该线程弹出
         idleMutex.lock();
         MyThread *myThread = idleThreadContainer.Top();
         idleThreadContainer.Pop();
