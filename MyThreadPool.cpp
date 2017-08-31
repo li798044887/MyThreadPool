@@ -21,7 +21,7 @@ void MyThreadPool::EndMyThreadPool()
 void MyThreadPool::AddIdleThread(int n)
 {
     idleMutex.lock();
-    idleThreadContainer.Assign(n,this);
+    idleThreadContainer.Assign(n, this);
     numberOfThread += n;
     idleMutex.unlock();
 }

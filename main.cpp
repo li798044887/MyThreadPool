@@ -13,6 +13,7 @@ int main()
     {
         j[i].SetData(i);
     }
+    //往线程池中添加50个任务
     for(int i = 0; i < 50;i++)
     {
         myThreadPool.AddTask(&j[i],i);
@@ -35,6 +36,5 @@ int main()
             break;
         }
     }
-    system("pause");
     return 0;
 }

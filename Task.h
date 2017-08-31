@@ -22,7 +22,7 @@ public:
         if(priority > (PRIORITY::MAX)){
             priority = (PRIORITY::MAX);
         } 
-        else if (priority < (PRIORITY::MIN)){
+        else if (priority < (PRIORITY::MAX)){
             priority = (PRIORITY::MIN);
         }
     }
